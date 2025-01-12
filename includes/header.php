@@ -16,7 +16,11 @@
     <!-- Define a base URL -->
     <?php
     // Define the base URL dynamically
-    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
+    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/hotel-restaurant';
+    // echo $_SERVER['DOCUMENT_ROOT'] . "<br>";
+    // echo dirname($_SERVER['SCRIPT_NAME']) . "<br>";
+    // echo $_SERVER['SCRIPT_NAME'] . "<br>";
+    // echo  $baseURL . "<br>";
     ?>
 
     <!-- Bootstrap CSS -->

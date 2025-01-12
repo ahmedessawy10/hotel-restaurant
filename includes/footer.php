@@ -1,7 +1,7 @@
 <?php
 // Define the base URL dynamically (if not already defined)
 if (!isset($baseURL)) {
-    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
+    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/hotel-restaurant';
 }
 
 // Loop through and include each script from the $scripts array

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg nav-color ">
     <div class="container-fluid">
         <a class="navbar-brand " href="#">
-            <img src="./assets/images/logo.png" class="w-49" alt="logo">
+            <img src="<?php echo $baseURL; ?>/assets/images/logo.png" class="w-49" alt="logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
