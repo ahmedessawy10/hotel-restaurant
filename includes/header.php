@@ -13,15 +13,23 @@
         rel="stylesheet">
     <!-- end font -->
 
+    <!-- Define a base URL -->
+    <?php
+    // Define the base URL dynamically
+    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
+    ?>
 
-    <link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/vendor/fontawesome/all.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/fontawesome/all.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/css/main.css">
 
+    <!-- Additional styles -->
     <?php
     foreach ($styles as $style) {
-        echo "<link rel='stylesheet' href='$style'>";
+        echo "<link rel='stylesheet' href='{$baseURL}/$style'>";
     }
     ?>
 </head>

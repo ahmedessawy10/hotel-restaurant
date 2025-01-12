@@ -1,11 +1,18 @@
 <?php
-foreach ($scripts as $script) {
-    echo "<script src='$script'></script>";
+// Define the base URL dynamically (if not already defined)
+if (!isset($baseURL)) {
+    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']);
 }
 
+// Loop through and include each script from the $scripts array
+foreach ($scripts as $script) {
+    echo "<script src='{$baseURL}/$script'></script>";
+}
 ?>
-<script src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-</body>
 
+<!-- Bootstrap JS -->
+<script src="<?php echo $baseURL; ?>/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
 
 </html>
