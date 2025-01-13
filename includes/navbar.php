@@ -13,10 +13,10 @@
                     <a class="nav-link " aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active " aria-current="page" href="#">products</a>
+                    <a class="nav-link active " aria-current="page" href="<?php echo $baseURL; ?>/pages/admin/products.html">products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="./users.html">users</a>
+                    <a class="nav-link " aria-current="page" href="<?php echo $baseURL; ?>/pages/admin/users.html">users</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " aria-current="page" href="#">manual order</a>

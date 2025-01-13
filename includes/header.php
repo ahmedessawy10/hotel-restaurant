@@ -16,13 +16,10 @@
     <!-- Define a base URL -->
     <?php
     // Define the base URL dynamically
-    // $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/hotel-restaurant';
-    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/' . explode('/', trim($_SERVER['SCRIPT_NAME'], '/'))[0];
-
-    // echo $_SERVER['HTTP_HOST']  . "<br>";
+    $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/hotel-restaurant';
     // echo $_SERVER['DOCUMENT_ROOT'] . "<br>";
     // echo dirname($_SERVER['SCRIPT_NAME']) . "<br>";
-    // echo explode('/', trim($_SERVER['SCRIPT_NAME'], '/'))[0] . "<br>";
+    // echo $_SERVER['SCRIPT_NAME'] . "<br>";
     // echo  $baseURL . "<br>";
     ?>
 
@@ -36,7 +33,7 @@
     <!-- Additional styles -->
     <?php
     foreach ($styles as $style) {
-        echo "<link rel='stylesheet' href='{$baseURL}/assets/css/$style'>";
+        echo "<link rel='stylesheet' href='{$baseURL}/$style'>";
     }
     ?>
 </head>
