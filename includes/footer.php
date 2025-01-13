@@ -4,7 +4,7 @@ if (!isset($baseURL)) {
     // $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/hotel-restaurant';
     $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . '/' . explode('/', trim($_SERVER['SCRIPT_NAME'], '/'))[0];
 }
-echo $baseURL . "<br>";
+
 // Loop through and include each script from the $scripts array
 foreach ($scripts as $script) {
     echo "<script src='{$baseURL}/$script'></script>";
