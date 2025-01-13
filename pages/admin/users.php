@@ -1,11 +1,11 @@
 <?php
-require_once "database/db.php";
+require_once "../../database/db.php";
 $pageTitle = "Users";
 $styles = ["users.css"];
 $scripts = [];
 
-require_once "includes/header.php";
-require_once "includes/navbar.php";
+require_once "../../includes/header.php";
+require_once "../../includes/navbar.php";
 
 ?>
         <main>      
@@ -100,4 +100,4 @@ require_once "includes/navbar.php";
     </main>
 
 
-<?php include "includes/footer.php";  ?>
+<?php include "../../includes/footer.php";  ?>

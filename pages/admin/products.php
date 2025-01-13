@@ -1,11 +1,11 @@
 <?php
-require_once "database/db.php";
+require_once "../../database/db.php";
 $pageTitle = "products";
 $styles = ["add_product.css"];
 $scripts = [];
 
-require_once "includes/header.php";
-require_once "includes/navbar.php";
+require_once "../../includes/header.php";
+require_once "../../includes/navbar.php";
 
 ?>
 
@@ -44,4 +44,4 @@ require_once "includes/navbar.php";
 
 
 
-<?php include "includes/footer.php";  ?>
+<?php include "../../includes/footer.php";  ?>
