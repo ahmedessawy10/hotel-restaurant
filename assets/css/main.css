@@ -2,25 +2,7 @@
     width: 49%;
 }
 .txt-color{
-    color: #7a5836;
-
-}
-.nav-color{
-    background-color: #e8d59e;
-}
-.admin{
-    border: 2px solid #7a5836;
-    padding: 15px 25px;
-    font-size: 30px;
-}
-nav ul li {
-    color: #7a5836 !important;
-    font-size: 25px;
-    font-family: "Ubuntu", serif;
-    font-weight: 400;
-
-}
-
+    color: #7a5836;}
 
 main .adding h2.add-title{
     color: #a55505;
