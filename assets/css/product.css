@@ -1,16 +1,18 @@
-.container h2.user-title {
+.add-title {
     color: #a55505;
 }
-body{
-    background-color: #fff3d2;
+
+.txt-color {
+    color: #7a5836;
 }
-.container button.add-user {
+
+.container button.btn-primary {
     background-color: #7a5836;
     border: none;
     transition: 0.7s all;
 }
 
-.container button.add-user:hover {
+.container button.btn-primary:hover {
     background-color: #e8d59e;
     color: #7a5836;
     border: 1px solid #7a5836;

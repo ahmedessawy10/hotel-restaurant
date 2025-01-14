@@ -1,5 +1,5 @@
 <?php
-include 'db_connection.php';
+include '/database/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_POST['user_id'];
@@ -45,4 +45,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Failed to place order: " . $e->getMessage();
     }
 }
-?>
