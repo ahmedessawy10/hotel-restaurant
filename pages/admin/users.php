@@ -8,6 +8,7 @@ require_once "../../includes/header.php";
 require_once "../../includes/navbar.php";
 
 ?>
+
         <main>      
         <div class="container mt-5 w-75">
       <div class="main-row d-flex flex-row justify-content-between">
