@@ -7,12 +7,13 @@ if (!isset($baseURL)) {
 
 // Loop through and include each script from the $scripts array
 foreach ($scripts as $script) {
-    echo "<script src='{$baseURL}/$script'></script>";
+    echo "<script src='{$baseURL}/assets/js/$script'></script>";
 }
 ?>
 
 <!-- Bootstrap JS -->
-<script src="<?php echo $baseURL; ?>/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
 
 </body>
 

@@ -24,16 +24,37 @@
     ?>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/bootstrap/css/bootstrap.css">
+    <script src="<?php echo $baseURL; ?>/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/fontawesome/all.css">
     <!-- Main CSS -->
     <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/css/main.css">
 
+
+    <!-- toastr css -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- jquery  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- toastr js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <!-- Additional styles -->
+
+
     <?php
     foreach ($styles as $style) {
-        echo "<link rel='stylesheet' href='{$baseURL}/$style'>";
+        echo "<link rel='stylesheet' href='{$baseURL}/assets/css/{$style}'>";
+    }
+
+    if (isset($_SESSION['alert']) && !empty($_SESSION['alert'])) {
+        $type = htmlspecialchars($_SESSION['alert']['type'], ENT_QUOTES, 'UTF-8');
+        $message = htmlspecialchars($_SESSION['alert']['message'], ENT_QUOTES, 'UTF-8');
+        echo "<script>toastr.$type('$message');</script>";
+        unset($_SESSION['alert']);
     }
     ?>
 </head>

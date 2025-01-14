@@ -1,6 +1,14 @@
 <?php
+session_start();
+error_reporting(0);
 require_once "../../database/db.php";
-$pageTitle = "Home";
+
+if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
+    header('location:../logout.php');
+    exit;
+}
+
+$pageTitle = "my profile";
 $styles = ["profile.css"];
 $scripts = [];
 
