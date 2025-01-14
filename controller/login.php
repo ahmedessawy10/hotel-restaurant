@@ -1,33 +1,40 @@
 <?php
-require_once "database/db.php";
+session_start();
+require_once "../database/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT password, role FROM users WHERE username = :username");
-    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    $stmt->execute();
+    try {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
 
-    if ($stmt->rowCount() > 0) {
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        $hashed_password = $user['password'];
-        $role = $user['role'];
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $hashed_password = $user['password'];
+            $role = $user['role'];
 
-        if (password_verify($password, $hashed_password)) {
-            if ($role === "admin") {
-                header("Location: admin_homepage.php");
-                exit();
-            } elseif ($role === "user") {
-                header("Location: user_homepage.php");
-                exit();
+            if (md5($password) == $hashed_password) {
+                $_SESSION['user'] = $user;
+                $_SEsSSION['alert'] = ['message' => "welcome " . $user["name"], "type" => "success"];
+                if ($role === "admin") {
+                    header("Location: admin_homepage.php");
+                    exit();
+                } elseif ($role === "user") {
+                    header("Location:../pages/profile/myprofile.php");
+                    exit();
+                }
+            } else {
+                echo "<p style='color:red;'>Wrong password, try again</p>";
             }
         } else {
-            echo "<p style='color:red;'>Wrong password, try again</p>";
+            echo "<p style='color:red;'>Sorry, we can't find you in our database</p>";
         }
-    } else {
-        echo "<p style='color:red;'>Sorry, we can't find you in our database</p>";
+    } catch (PDOException $e) {
+        echo "<p style='color:red;'>An error occurred. Please try again later.</p>";
+        // Log the error message for debugging purposes
+        error_log($e->getMessage());
     }
 }
-
-?>

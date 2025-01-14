@@ -13,10 +13,12 @@
                     <a class="nav-link " aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active " aria-current="page" href="<?php echo $baseURL; ?>/pages/admin/products.html">products</a>
+                    <a class="nav-link active " aria-current="page"
+                        href="<?php echo $baseURL; ?>/pages/admin/products.php">products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="<?php echo $baseURL; ?>/pages/admin/users.html">users</a>
+                    <a class="nav-link " aria-current="page"
+                        href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " aria-current="page" href="#">manual order</a>
@@ -25,9 +27,16 @@
                     <a class="nav-link " aria-current="page" href="#">check</a>
                 </li>
             </ul>
-            <span class=" me-0 border-1 rounded-circle txt-color"><i class="fa-solid fa-user "></i></span>
-            <p class="txt-color mt-2 pt-2 ps-2 ">admin name</p>
 
+            <?php
+            if (isset($_SESSION['user']) && count($_SESSION['user']) > 0) {
+                echo "<span class='me-0 border-1 rounded-circle txt-color'><i class='fa-solid fa-user'></i></span>";
+                echo "<p class='txt-color mt-2 pt-2 ps-2'>{$_SESSION['user']['name']}</p>";
+            } else {
+                echo "<span class='me-0 border-1 rounded-circle txt-color'><i class='fa-solid fa-user'></i></span>";
+                echo "<p class='txt-color mt-2 pt-2 ps-2'>no user</p>";
+            }
+            ?>
         </div>
     </div>
 </nav>

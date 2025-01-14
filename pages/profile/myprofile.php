@@ -1,6 +1,14 @@
 <?php
+session_start();
+error_reporting(0);
 require_once "../../database/db.php";
-$pageTitle = "Home";
+
+if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
+    header('location:../logout.php');
+    exit;
+}
+
+$pageTitle = "my profile";
 $styles = ["profile.css"];
 $scripts = [];
 
@@ -33,27 +41,36 @@ require_once "../../includes/navbar.php";
                     <h2 class=" p-2 w-100"> my profile</h2>
 
                     <div class="prfile_image d-flex justify-content-center center align-items-center  my-3">
-                        <button class="btn " data-toggle="modal" type="button" data-target="#updateImage">
-                            <img src=" ../../assets/images/logo.png" alt="">
+                        <button class="btn " data-bs-toggle="modal" data-bs-target="#profileModal">
+                            <?php
+                            if ($_SESSION['user']['image']) {
+                                echo "<img src= ../../" . $_SESSION['user']['image'] . " alt=''>";
+                            } else {
+                                echo "<img src='../../assets/images/default_profile.png' alt=''>";
+                            }
+                            ?>
                         </button>
                     </div>
 
 
-                    <form action="">
+                    <form action="../../controller/profile.php" method="POST">
 
                         <div class="row justify-content-center">
                             <div class="col-md-10 my-2">
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
-                                        placeholder="Enter name">
+                                    <input type="text" class="form-control" id="name" aria-describedby="nameHelp"
+                                        placeholder="Enter name" name="name" value="<?php echo
+                                                                                    $_SESSION['user']['name']
+                                                                                    ?>">
                                 </div>
                             </div>
                             <div class="col-md-10 my-2 ">
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                                        placeholder="Enter Email">
+                                        placeholder="Enter Email" name="email"
+                                        value="<?php echo $_SESSION['user']['email'] ?>">
                                 </div>
 
                             </div>
@@ -61,7 +78,8 @@ require_once "../../includes/navbar.php";
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
                                     <input type="text" class="form-control" id="phone" aria-describedby="phoneHelp"
-                                        placeholder="Enter phone">
+                                        name="phone"
+                                        placeholder="Enter phone" value="<?php echo $_SESSION['user']['phone'] ?>">
                                 </div>
 
                             </div>
@@ -69,10 +87,11 @@ require_once "../../includes/navbar.php";
                         </div>
 
 
-                        <div class="d-flex justify-content-center py-3">
-                            <button type="submit" class="btn btn-primary">update</button>
+                        <div class=" d-flex justify-content-center py-3">
+                            <button type="submit"
+                                name="update" class="btn btn-primary">update</button>
                         </div>
-                    </form>
+                    </form action="../../controller/profile.php" method="POST">
 
                 </div>
                 <!-- change password -->
@@ -80,48 +99,45 @@ require_once "../../includes/navbar.php";
                     tabindex="0">
                     <h2 class=" p-2 w-100 ">change password</h2>
 
-                    <form action=" ">
+                    <form action="../../controller/profile.php" method="POST">
 
                         <div class="row justify-content-center">
                             <div class="col-md-10 my-2">
                                 <div class="form-group">
                                     <label for="oldPassword">old password</label>
-                                    <input type="text" class="form-control" id="oldPassword"
-                                        aria-describedby="emailHelp" placeholder="Enter oldPassword">
+                                    <input type="text"
+
+                                        class="form-control" id="oldPassword"
+                                        aria-describedby="emailHelp" name="currentpassword"
+                                        placeholder="Enter oldPassword">
                                 </div>
                             </div>
                             <div class="col-md-10 my-2 ">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                                        placeholder="Enter Email">
+                                    <label for="newpassword ">new password </label>
+                                    <input type="newpassword " class="form-control" id="newpassword"
+                                        aria-describedby="newpassword Help" placeholder="Enter newpassword " name="newpassword">
                                 </div>
-
-                            </div>
-                            <div class="col-md-10 my-2 ">
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" id="phone" aria-describedby="phoneHelp"
-                                        placeholder="Enter phone">
+                                    <label for="confirmpassword ">new password </label>
+                                    <input type="confirmpassword " class="form-control" id="confirmpassword"
+                                        aria-describedby="confirmpassword Help" placeholder="Enter confirmpassword "
+                                        name="confirmpassword
+                                        
+                                        ">
                                 </div>
 
                             </div>
+
 
                         </div>
-
 
                         <div class="d-flex justify-content-center py-3">
-                            <button type="submit" class="btn btn-primary">update</button>
+                            <button type="submit" class="btn       btn-primary"
+                                name="changepass">update</button>
                         </div>
-
                     </form>
-
-
-
-
                 </div>
-
-
             </div>
         </div>
 
@@ -136,40 +152,40 @@ require_once "../../includes/navbar.php";
 
 
 
-<div class=" modal fade" id="updateImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">update image</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="addUserModalLabel">upload image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div>
-                    <form action="" method="" menctype=" multipart/form-data">
+
+            <form action="../../controller/profile.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div>
+
                         <div class="form-group
                         ">
                             <label for="image"><img src="" alt=""></label>
-                            <input type="file" name="image" class="form-control-file" id="image">
+                            <input type="file" name="profileimage" class="form-control-file" id="image">
                         </div>
 
-                        <div class="form-group
-                        ">
 
-                            <button type="submit" class="form-control-file">update</button>
-                    </form>
-                </div>
-
-            </div>
-            <div class=" modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">change</button>
-            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="uploadimage" class="btn btn-success">Save changes</button>
+                    </div>
+            </form>
         </div>
     </div>
+
+
+
 </div>
+
+
+
 
 
 <?php include "../../includes/footer.php";  ?>
