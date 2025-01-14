@@ -1,76 +1,71 @@
-.w-49{
-    width: 49%;
-}
-.txt-color{
-    color: #7a5836;
-
-}
-
-.container h2.user-title{
+.container h2.user-title {
     color: #a55505;
 }
-.container button.add-user{
-    margin-right: 0px;
+body{
+    background-color: #fff3d2;
+}
+.container button.add-user {
     background-color: #7a5836;
     border: none;
-    transition: .7s all;
+    transition: 0.7s all;
 }
-.container button.add-user:hover{
+
+.container button.add-user:hover {
     background-color: #e8d59e;
     color: #7a5836;
     border: 1px solid #7a5836;
-
 }
-.container table{
+
+.container table {
     border: 6px double #a55505;
 }
-.container table th{
+
+.container table th {
     color: rgb(61, 61, 61);
     padding: 15px 20px;
 }
 
-.container table tr{
-    font-size: 15px;
-}
-
-.container table td button{
-    margin-right: 0px;
+.container table td button {
+    margin-right: 5px;
     background-color: #7a5836;
     border: none;
-    transition: .7s all;
+    transition: 0.7s all;
 }
-.container table td button.btn-warning:hover{
+
+.container table td button.btn-warning:hover {
     background-color: #ffffff;
-    border:1px solid rgb(212, 110, 27);
-    color: #7a5836;
-}
-.container table td button.btn-danger:hover{
-    background-color: #ffffff;
-    border:1px solid rgb(243, 76, 76);
+    border: 1px solid rgb(212, 110, 27);
     color: #7a5836;
 }
 
-
-.modal-header,.modal-footer{
-    background-color:#e8d59e;
-
+.container table td button.btn-danger:hover {
+    background-color: #ffffff;
+    border: 1px solid rgb(243, 76, 76);
+    color: #7a5836;
 }
+
+.modal-header,
+.modal-footer {
+    background-color: #e8d59e;
+}
+
 .modal-title {
     color: #a55505;
     font-size: 24px;
 }
-.modal-body form label{
+
+.modal-body form label {
     color: #7a5836;
     font-size: 18px;
     font-weight: 600;
 }
-.modal-body form input{
+
+.modal-body form input {
     border: 2px solid #a55505;
-
 }
-.modal-footer button{
-    background-color: #ffffff;
-    border:1px solid rgb(212, 110, 27);
-    color: #7a5836;
 
+.modal-footer button {
+    background-color: #ffffff;
+    border: 1px solid rgb(212, 110, 27);
+    color: #7a5836;
 }

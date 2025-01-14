@@ -17,20 +17,19 @@
     background-color: white;
 }
 
-/* Circular Image Styling */
 .myprofile .prfile_image .btn {
-    width: 150px; /* Increased size for better visibility */
+    width: 150px; 
     height: 150px;
     border-radius: 50%;
     padding: 0;
-    border: 4px solid var(--secondary-color); /* Border for the circle */
-    overflow: hidden; /* Ensures the image stays within the circle */
+    border: 4px solid var(--secondary-color); 
+    overflow: hidden;
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .myprofile .prfile_image .btn:hover {
-    border-color: var(--button-hover-color); /* Change border color on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    border-color: var(--button-hover-color); 
+    transform: scale(1.05);
 }
 
 .myprofile .prfile_image .btn img {
@@ -50,7 +49,6 @@
     font-weight: bold;
 }
 
-/* Navigation Pills Styling */
 .nav-pills .nav-link.active {
     background-color: var(--secondary-color) !important;
     color: var(--primary-color) !important;
@@ -67,24 +65,22 @@
     color: var(--primary-color);
 }
 
-/* Button Styling */
 .btn-primary {
     background-color: var(--button-color);
     border-color: var(--button-color);
     color: white;
     font-weight: bold;
     padding: 10px 20px;
-    border-radius: 25px; /* Rounded corners */
+    border-radius: 25px;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .btn-primary:hover {
     background-color: var(--button-hover-color);
     border-color: var(--button-hover-color);
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    transform: scale(1.05);
 }
 
-/* Modal Styling */
 .modal-header {
     background-color: var(--secondary-color);
 }

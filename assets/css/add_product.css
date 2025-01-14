@@ -1,90 +1,73 @@
-.custom-file-input::-webkit-file-upload-button {
-    visibility: hidden;
-}
-.custom-file-input::before {
-    content: 'Choose File';
-    display: inline-block;
-    background: #007bff;
-    color: white;
-    border-radius: 3px;
-    padding: 5px 8px;
-    outline: none;
-    white-space: nowrap;
-    cursor: pointer;
-    text-shadow: 1px 1px #fff;
-    font-weight: 700;
-    font-size: 10pt;
-}
-.custom-file-input:hover::before {
-    background: #0056b3;
-}
-.custom-file-input:active::before {
-    background: #004080;
+.add-title {
+    color: #a55505;
 }
 
-/* Text color */
 .txt-color {
     color: #7a5836;
 }
 
-/* Navbar color */
-.nav-color {
-    background-color: #e8d59e;
-}
-
-/* Admin section */
-.admin {
-    border: 2px solid #7a5836;
-    padding: 15px 25px;
-    font-size: 30px;
-}
-
-/* Navbar list items */
-nav ul li {
-    color: #7a5836 !important;
-    font-size: 25px;
-    font-family: "Ubuntu", serif;
-    font-weight: 400;
-}
-
-/* Main section - Adding products */
-main .adding h2.add-title {
-    color: #a55505;
-}
-
-main .adding form label {
-    color: #7a5836;
-    font-size: 24px;
-}
-
-main .adding form input,
-main .adding form select {
-    border: 2px solid #a55505;
-}
-
-main .adding form button {
-    border: none;
-    color: #fff;
+.container button.btn-primary {
     background-color: #7a5836;
+    border: none;
     transition: 0.7s all;
 }
 
-main .adding form button:hover {
+.container button.btn-primary:hover {
     background-color: #e8d59e;
     color: #7a5836;
     border: 1px solid #7a5836;
 }
 
-/* Modal styling */
-.modal-content {
-    border-radius: 10px;
+.container table {
+    border: 6px double #a55505;
 }
-.modal-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    border-radius: 10px 10px 0 0;
+
+.container table th {
+    color: rgb(61, 61, 61);
+    padding: 15px 20px;
 }
+
+.container table td button {
+    margin-right: 5px;
+    background-color: #7a5836;
+    border: none;
+    transition: 0.7s all;
+}
+
+.container table td button.btn-warning:hover {
+    background-color: #ffffff;
+    border: 1px solid rgb(212, 110, 27);
+    color: #7a5836;
+}
+
+.container table td button.btn-danger:hover {
+    background-color: #ffffff;
+    border: 1px solid rgb(243, 76, 76);
+    color: #7a5836;
+}
+
+.modal-header,
 .modal-footer {
-    border-top: 1px solid #dee2e6;
-    border-radius: 0 0 10px 10px;
+    background-color: #e8d59e;
+}
+
+.modal-title {
+    color: #a55505;
+    font-size: 24px;
+}
+
+.modal-body form label {
+    color: #7a5836;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-body form input {
+    border: 2px solid #a55505;
+}
+
+.modal-footer button {
+    background-color: #ffffff;
+    border: 1px solid rgb(212, 110, 27);
+    color: #7a5836;
 }
