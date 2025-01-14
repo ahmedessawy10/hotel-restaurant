@@ -1,15 +1,16 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 11, 2025 at 02:07 AM
--- Server version: 8.0.40
--- PHP Version: 8.1.10
+-- Host: 127.0.0.1
+-- Generation Time: Jan 14, 2025 at 07:41 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,8 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `category` (
-  `id` int NOT NULL,
-  `name` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `update_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -40,10 +41,10 @@ CREATE TABLE `category` (
 --
 
 CREATE TABLE `orders` (
-  `id` int NOT NULL,
-  `order_by` int NOT NULL,
-  `room_id` int NOT NULL,
-  `notes` text,
+  `id` int(11) NOT NULL,
+  `order_by` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `notes` text DEFAULT NULL,
   `status` enum('processing','out for delivery','done') NOT NULL,
   `total` float NOT NULL,
   `created_at` datetime NOT NULL
@@ -56,11 +57,11 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `orders_items` (
-  `id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `order_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `price` float NOT NULL,
-  `quantity` int NOT NULL
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -70,11 +71,11 @@ CREATE TABLE `orders_items` (
 --
 
 CREATE TABLE `products` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `price` float NOT NULL,
   `image` varchar(300) NOT NULL,
-  `category_id` int NOT NULL,
+  `category_id` int(11) NOT NULL,
   `available` tinyint(1) NOT NULL,
   `create_at` datetime NOT NULL,
   `update_at` datetime NOT NULL
@@ -87,10 +88,10 @@ CREATE TABLE `products` (
 --
 
 CREATE TABLE `rooms` (
-  `room_id` int NOT NULL,
+  `room_id` int(11) NOT NULL,
   `room_name` varchar(200) NOT NULL,
-  `floor` int NOT NULL,
-  `bed_number` int NOT NULL
+  `floor` int(11) NOT NULL,
+  `bed_number` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -100,9 +101,9 @@ CREATE TABLE `rooms` (
 --
 
 CREATE TABLE `room_booking` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `room_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
   `check_in` datetime NOT NULL,
   `check_out` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -114,14 +115,21 @@ CREATE TABLE `room_booking` (
 --
 
 CREATE TABLE `users` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(200) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `type` enum('user','admin') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `role` enum('user','admin') NOT NULL,
   `phone` varchar(11) NOT NULL,
-  `image` varchar(300) NOT NULL
+  `image` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `phone`, `image`) VALUES
+(1, 'ahmedmostaffaessawy', 'ahmed@gmail.com', '202cb962ac59075b964b07152d234b70', 'user', '01023552510', 'assets/images/upload/1736879122.jpg');
 
 --
 -- Indexes for dumped tables
@@ -185,28 +193,28 @@ ALTER TABLE `users`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`order_by`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`order_by`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  ADD CONSTRAINT `orders_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `orders_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `orders_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `orders_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
 -- Constraints for table `room_booking`
 --
 ALTER TABLE `room_booking`
-  ADD CONSTRAINT `room_booking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `room_booking_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `room_booking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `room_booking_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

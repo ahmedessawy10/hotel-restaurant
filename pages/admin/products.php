@@ -1,7 +1,7 @@
 <?php
 require_once "../../database/db.php";
 $pageTitle = "products";
-$styles = ["../../css/add_product.css"];
+$styles = ["../../css/product.css"];
 $scripts = ["../../js/product.js"];
 
 require_once "../../includes/header.php";
