@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" aria-current="page" href="<?php echo $baseURL; ?>/pages/user/home.php" >Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="<?php echo $baseURL; ?>/pages/admin/products.php">Products</a>
@@ -19,7 +19,7 @@
                     <a class="nav-link" aria-current="page" href="<?php echo $baseURL; ?>/pages/admin/users.php">Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Manual Order</a>
+                    <a class="nav-link" aria-current="page"  href="<?php echo $baseURL; ?>/pages/admin/manual_order.php">Manual Order</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">Check</a>
