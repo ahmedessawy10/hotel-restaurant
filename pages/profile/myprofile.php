@@ -8,6 +8,7 @@ if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
     exit;
 }
 
+
 $pageTitle = "my profile";
 $styles = ["profile.css"];
 $scripts = [];
