@@ -6,10 +6,75 @@
 
 :root{
     --primary-color: #7a5836;
-    --secondary-color: rgb(247, 248, 247);
+    --secondary-color: rgb(214, 195, 169);
+}
+li {
+    list-style: none;
+    display: inline-block;
+  }
+  a {
+    text-decoration: none;
+    color:#000;
+  }
+  
+  header{
+  background-color: rgb(214, 195, 169);
+  }
+header .logo img , .offcanvas-body .logo img{
+    width:80px;
+    border-radius:6px;
+}
+.offcanvas-body .logo img{
+    width:100px;
 }
 
+header nav{
+    align-items:center;
+}
 
+header nav a{
+    color:#fff;
+}
+
+header nav a:hover{
+    color: var(--primary-color);
+}
+
+.link-active{
+    color: var(--primary-color);
+}
+
+.login-link{
+    border:1px solid var(--primary-color);
+    font-weight:bold;
+    color:#fff;
+    border-radius:5px;
+    
+}
+.offcanvas .login-link{
+    color: var(--secondary-color);
+}
+
+a.login-link:hover{
+    background:var(--primary-color) !important;
+    color:#fff;
+    text-decoration:none;
+
+}
+.dropdown-toggle img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:1;
+}
+.dropdown-toggle span{
+ align-self:center;
+ max-width:100px;
+ overflow:hidden;
+}
+.dropdown-toggle::after{
+    align-self:center;
+}
 .w-49{
     width: 49%;
 }
@@ -26,6 +91,7 @@ main .adding form label{
 
 
 }
+
 main .adding form input,main .adding form select{
     border: 2px solid #a55505;
 }

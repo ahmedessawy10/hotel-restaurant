@@ -25,9 +25,6 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/bootstrap/css/bootstrap.css">
-    <script src="<?php echo $baseURL; ?>/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="<?php echo $baseURL; ?>/assets/vendor/fontawesome/all.css">
     <!-- Main CSS -->
@@ -39,9 +36,10 @@
 
     <!-- jquery  -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- toastr js -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    <!-- toastr js -->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- Additional styles -->
 
 

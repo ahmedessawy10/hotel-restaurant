@@ -17,6 +17,10 @@
     background-color: white;
 }
 
+.nav-pills {
+    box-shadow: 0px 8px 15px 0px rgba(0, 0, 1, 0.09);
+}
+
 .myprofile .prfile_image .btn {
     width: 150px; 
     height: 150px;

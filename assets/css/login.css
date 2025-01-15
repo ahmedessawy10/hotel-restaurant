@@ -8,9 +8,7 @@ body {
 
 }
 form {
-    position: fixed; /* or use absolute/fixed based on your layout */
-    top: 40%;
-    left: 5%;
+  
     align-items: center;
     border: 5px solid #e5ce8b;
     width: 500px;
