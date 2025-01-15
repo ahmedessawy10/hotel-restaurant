@@ -20,10 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user'] = $user;
                 $_SEsSSION['alert'] = ['message' => "welcome " . $user["name"], "type" => "success"];
                 if ($role === "admin") {
-                    header("Location: admin_homepage.php");
+                    header("Location: ../pages/admin/manual_order.php");
                     exit();
                 } elseif ($role === "user") {
-                    header("Location:../pages/profile/myprofile.php");
+                    header("Location:../pages/home.php");
                     exit();
                 }
             } else {

@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+error_reporting(0);
+require_once "../../database/db.php";
+
+if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
+    header('location:../logout.php');
+    exit;
+}
 require_once "../../database/db.php";
 $pageTitle = "Users";
 $styles = ["../../assets/css/users.css"];
@@ -11,6 +20,7 @@ require_once "../../includes/navbar.php";
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +29,7 @@ require_once "../../includes/navbar.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <main>
         <div class="container mt-5 w-75">
@@ -113,11 +124,12 @@ require_once "../../includes/navbar.php";
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="../../assets/js/user.js"></script>
 </body>
-</html>
+
+</html> -->
 
 
-<?php include "../../includes/footer.php";  ?>
+    <?php include "../../includes/footer.php";  ?>

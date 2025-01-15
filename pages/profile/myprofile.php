@@ -23,12 +23,12 @@ require_once "../../includes/navbar.php";
     <div class="container ">
 
         <div class="row align-items-start ">
-            <div class="col-md-3 nav d-flex flex-column nav-pills " id="v-pills-tab" role="tablist"
+            <div class="col-md-3 nav d-flex flex-column nav-pills p-2" id="v-pills-tab" role="tablist"
                 aria-orientation="vertical">
-                <button class="nav-link active " id="v-pills-home-tab" data-bs-toggle="pill"
+                <button class="nav-link active  mb-2" id="v-pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
                     aria-selected="true">my profile</button>
-                <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
+                <button class="nav-link mb-2" id="v-pills-profile-tab" data-bs-toggle="pill"
                     data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
                     aria-selected="false">password</button>
 
@@ -117,6 +117,9 @@ require_once "../../includes/navbar.php";
                                     <input type="newpassword " class="form-control" id="newpassword"
                                         aria-describedby="newpassword Help" placeholder="Enter newpassword " name="newpassword">
                                 </div>
+
+                            </div>
+                            <div class="col-md-10 my-2 ">
                                 <div class="form-group">
                                     <label for="confirmpassword ">new password </label>
                                     <input type="confirmpassword " class="form-control" id="confirmpassword"
@@ -125,9 +128,8 @@ require_once "../../includes/navbar.php";
                                         
                                         ">
                                 </div>
+
                             </div>
-
-
                         </div>
 
                         <div class="d-flex justify-content-center py-3">
@@ -144,49 +146,43 @@ require_once "../../includes/navbar.php";
 
 
 
-<!-- update image modal -->
+    <!-- update image modal -->
 
 
 
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">upload image</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">upload image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-            <form action="../../controller/profile.php" method="POST" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <div>
+                <form action="../../controller/profile.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div>
 
-                        <div class="form-group
+                            <div class="form-group
                         ">
-                            <label for="image"><img src="" alt=""></label>
-                            <input type="file" name="profileimage" class="form-control-file" id="image">
+                                <label for="image"><img src="" alt=""></label>
+                                <input type="file" name="profileimage" class="form-control-file" id="image">
+                            </div>
+
+
                         </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="uploadimage" class="btn btn-success">Save changes</button>
-                    </div>
-            </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="uploadimage" class="btn btn-success">Save changes</button>
+                        </div>
+                </form>
+            </div>
         </div>
+
+
+
     </div>
 
 
 
-</div>
 
-
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-<?php include "../../includes/footer.php";  ?>
+    <?php include "../../includes/footer.php";  ?>
