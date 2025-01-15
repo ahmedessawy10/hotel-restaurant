@@ -1,5 +1,12 @@
 <?php
+session_start();
+error_reporting(0);
 require_once "../../database/db.php";
+
+if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
+    header('location:../logout.php');
+    exit;
+}
 $pageTitle = "Home";
 $styles = ["../../assets/css/home.css"];
 $scripts = [];
@@ -108,45 +115,6 @@ require_once "../../includes/navbar.php";
     </div>
 </div>
 
-<footer class="bg-light py-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 text-center text-lg-start mb-3">
-                <img src="./logo.jpg" class="w-25 rounded-circle" alt="Logo">
-                <p>We provide world-class food services.</p>
-                <div>
-                    <a href="#" class="me-2"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="me-2"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <h5>Our Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Home</a></li>
-                    <li><a href="#" class="text-decoration-none">FAQs</a></li>
-                    <li><a href="#" class="text-decoration-none">Contact Us</a></li>
-                    <li><a href="#" class="text-decoration-none">Site Map</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-3">
-                <h5>Support</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">About Us</a></li>
-                    <li><a href="#" class="text-decoration-none">How it Works</a></li>
-                    <li><a href="#" class="text-decoration-none">Terms & Conditions</a></li>
-                    <li><a href="#" class="text-decoration-none">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-3">
-                <h5>Contact</h5>
-                <p><i class="fa-solid fa-phone"></i> 123-456-789</p>
-                <p><i class="fa-regular fa-clock"></i> Open: 11:00 AM - 11:59 PM</p>
-            </div>
-        </div>
-    </div>
-</footer>
 
 
 <?php include "../../includes/footer.php";  ?>
