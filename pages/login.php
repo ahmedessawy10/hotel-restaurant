@@ -10,7 +10,7 @@ require_once "../includes/header.php";
 ?>
 
 <section class="d-flex w-100 h-100 justify-content-center align-items-center">
-    <form action="../controller/login.php" method="post" >
+    <form action="../controller/login.php" method="post">
         <div class="input-group">
             <input type="email" name="email" id="email" class="form-control-lg" placeholder="User Email" required>
         </div>
@@ -18,11 +18,11 @@ require_once "../includes/header.php";
             <input type="password" name="password" class="form-control-lg" id="password" placeholder="Password" required>
         </div>
         <div class="input-group">
-            <input type="checkbox" class="check > Remember me ?
+            <input type="checkbox" class="check"> Remember me ?
         </div>
 
         <a href="" style=" text-decoration: none;">Forgot Password ?</a>
-            <BUtton type="submit">Login </BUtton>
+        <button class="btn" type="submit">Login </button>
     </form>
 
 </section>

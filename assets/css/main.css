@@ -51,10 +51,13 @@ header nav a:hover{
     border-radius:5px;
     
 }
-.offcanvas .login-link{
+.offcanvas-nav.offcanvas .login-link{
     color: var(--secondary-color);
 }
 
+header .dropdown-menu{
+    z-index:20000;
+}
 a.login-link:hover{
     background:var(--primary-color) !important;
     color:#fff;

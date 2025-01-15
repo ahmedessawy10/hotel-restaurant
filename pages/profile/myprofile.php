@@ -146,44 +146,44 @@ require_once "../../includes/navbar.php";
 
 
 
-
-    <!-- update image modal -->
-
-
-
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">upload image</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <form action="../../controller/profile.php" method="POST" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div>
-
-                            <div class="form-group
-                        ">
-                                <label for="image"><img src="" alt=""></label>
-                                <input type="file" name="profileimage" class="form-control-file" id="image">
-                            </div>
+</div>
+<!-- update image modal -->
 
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="uploadimage" class="btn btn-success">Save changes</button>
-                        </div>
-                </form>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addUserModalLabel">upload image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <form action="../../controller/profile.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div>
+
+                        <div class="form-group
+                        ">
+                            <label for="image"><img src="" alt=""></label>
+                            <input type="file" name="profileimage" class="form-control-file" id="image">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="uploadimage" class="btn btn-success">Save changes</button>
+                    </div>
+            </form>
         </div>
-
-
-
     </div>
 
+</div>
+
+</div>
 
 
 
-    <?php include "../../includes/footer.php";  ?>
+
+<?php include "../../includes/footer.php";  ?>

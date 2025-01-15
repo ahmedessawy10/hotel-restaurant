@@ -11,7 +11,8 @@ if (!isset($baseURL)) {
     <div class="container">
         <div class="row">
             <div class="col-lg-3 text-center text-lg-start mb-3">
-                <img src="<?php echo $baseURL  ?>/assets/images/logo.png" class=" rounded-circle" alt="Logo">
+                <img src="<?php echo $baseURL  ?>/assets/images/logo.png" class=" rounded-circle" alt="Logo" style="width: 70px;
+    height: 70px;">
                 <p>We provide world-class food services.</p>
                 <div>
                     <a href="#" class="me-2 link-dark"><i class="fab fa-facebook"></i></a>

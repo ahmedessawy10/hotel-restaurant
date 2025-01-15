@@ -1,4 +1,4 @@
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+<div class="offcanvas  offcanvas-nav offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
         <button type="button" class="btn-close " style="width:15px;height:15px;border:1px dotted #777;border-radius: 50%;color:#000;" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -49,7 +49,17 @@
                 <div class="dropdown">
 
                     <button class="btn btn-secondary dropdown-toggle d-flex justify-content-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="<?php echo $baseURL . '/' . $_SESSION['user']['image']  ?>" alt="">
+                        <?php
+                        $userImagePath = $_SESSION['user']['image'] ? $baseURL . '/' . $_SESSION['user']['image'] : null;
+                        if (isset($userImagePath) && file_exists($userImagePath)) { ?>
+                            <img src="<?php echo  $userImagePath  ?>" alt="">
+
+                        <?php
+                        } else { ?>
+
+                            <img src="<?php echo $baseURL . '/assets/images/default_profile.png' ?>" alt="">
+                        <?php }
+                        ?>
                         <span class="mx-1"><?php echo $_SESSION['user']['name']  ?></span>
 
                     </button>

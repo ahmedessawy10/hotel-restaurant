@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: ../pages/admin/manual_order.php");
                     exit();
                 } elseif ($role === "user") {
-                    header("Location:../pages/home.php");
+                    header("Location:../pages/user/home.php");
                     exit();
                 }
             } else {
