@@ -46,9 +46,9 @@
             if (isset($_SESSION['user']) && count($_SESSION['user']) > 0) {
 
             ?>
-                <div class="dropdown">
+                <div class="dropdown profile-toggle">
 
-                    <button class="btn btn-secondary dropdown-toggle d-flex justify-content-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn  dropdown-toggle d-flex justify-content-center profile-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         $userImagePath = $_SESSION['user']['image'] ? $baseURL . '/' . $_SESSION['user']['image'] : null;
                         if (isset($userImagePath) && file_exists($userImagePath)) { ?>
@@ -133,7 +133,7 @@
                 ?>
                     <div class="dropdown">
 
-                        <button class="btn btn-secondary dropdown-toggle d-flex justify-content-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn  dropdown-toggle d-flex justify-content-center profile-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="<?php echo $baseURL . '/' . $_SESSION['user']['image']  ?>" alt="">
                             <span class="mx-1"><?php echo $_SESSION['user']['name']  ?></span>
 
