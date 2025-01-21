@@ -29,7 +29,7 @@
                         <?php  } elseif ($_SESSION['user']['role'] == "user") { ?>
                             <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
 
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="index.html ">my orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/myOrders.php">my orders</a></li>
                         <?php  } ?>
 
                     <?php } else {
@@ -46,9 +46,9 @@
             if (isset($_SESSION['user']) && count($_SESSION['user']) > 0) {
 
             ?>
-                <div class="dropdown">
+                <div class="dropdown profile-toggle">
 
-                    <button class="btn btn-secondary dropdown-toggle d-flex justify-content-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn  dropdown-toggle d-flex justify-content-center profile-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
                         $userImagePath = $_SESSION['user']['image'] ? $baseURL . '/' . $_SESSION['user']['image'] : null;
                         if (isset($userImagePath) && file_exists($userImagePath)) { ?>
@@ -115,7 +115,7 @@
 
                                 <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
 
-                                <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="index.html ">my orders</a></li>
+                                <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/myOrders.php">my orders</a></li>
 
                             <?php  } ?>
 
@@ -133,7 +133,7 @@
                 ?>
                     <div class="dropdown">
 
-                        <button class="btn btn-secondary dropdown-toggle d-flex justify-content-center " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn  dropdown-toggle d-flex justify-content-center profile-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="<?php echo $baseURL . '/' . $_SESSION['user']['image']  ?>" alt="">
                             <span class="mx-1"><?php echo $_SESSION['user']['name']  ?></span>
 
