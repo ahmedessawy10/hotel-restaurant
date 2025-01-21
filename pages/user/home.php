@@ -7,103 +7,110 @@ if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
     header('location:../logout.php');
     exit;
 }
-$pageTitle = "Home";
-$styles = ["../../assets/css/home.css"];
-$scripts = [];
+
+$pageTitle = "products";
+$styles = ["product.css"];
+$scripts = ["product.js"];
 
 require_once "../../includes/header.php";
 require_once "../../includes/navbar.php";
-?>
 
 
-<?php
-session_start();
-error_reporting(0);
-require_once "../../database/db.php";
-
-if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
-    header('location:../logout.php');
-    exit;
-}
-
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
-    $productId = $_POST['product_id'];
-    $productName = $_POST['product_name'];
-    $productPrice = $_POST['product_price'];
-
-    $_SESSION['cart'][] = [
-        'id' => $productId,
-        'name' => $productName,
-        'price' => $productPrice
-    ];
-}
-
+// Fetch products from the database
 try {
-    $stmt = $conn->query("SELECT * FROM products");
-    $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT * FROM products ORDER BY id DESC";
+    $stmt = $conn->query($sql);
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    die("Error fetching products: " . $e->getMessage());
 }
 ?>
 
-<div class="container my-4">
-    <div class="row">
-        <aside class="col-lg-3 mb-4">
-            <div class="bg-light p-3 rounded">
-                <h5>Search</h5>
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="search" class="form-control" placeholder="Search...">
-                </div>
-                <h5>Categories</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Hot Drinks</a></li>
-                    <li><a href="#" class="text-decoration-none">Cold Drinks</a></li>
-                    <li><a href="#" class="text-decoration-none">Food</a></li>
-                    <li><a href="#" class="text-decoration-none">Cheese</a></li>
-                </ul>
-            </div>
-        </aside>
+    <main class="container mt-5">
+        <h2 class="add-title txt-color mb-4">Product Management</h2>
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            Add Product
+        </button>
 
-        <main class="col-lg-6 mb-4">
-            <h4 class="mb-3">Menu</h4>
-            <div class="row g-4">
-                <!-- Menu Items -->
-                <?php foreach ($menuItems as $item): ?>
-                <div class="col-md-6">
-                    <div class="card menu-item">
-                        <img src="<?php echo htmlspecialchars($item['image']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($item['name']); ?>">
-                        <div class="card-body text-center">
-                            <h6 class="card-title"><?php echo htmlspecialchars($item['name']); ?></h6>
-                            <p class="card-text">$<?php echo htmlspecialchars($item['price']); ?></p>
-                            <form method="POST" action="">
-                                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['t1']); ?>">
-                                <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
-                                <input type="hidden" name="product_price" value="<?php echo htmlspecialchars($item['price']); ?>">
-                                <button type="submit" name="add_to_cart" class="btn btn-primary">Choose</button>
-                            </form>
-                        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="productTable">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Category ID</th>
+                        <th>Available</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($products as $product): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($product['id']) ?></td>
+                            <td><?= htmlspecialchars($product['name']) ?></td>
+                            <td>$<?= htmlspecialchars($product['price']) ?></td>
+                            <td><img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="50"></td>
+                            <td><?= htmlspecialchars($product['category_id']) ?></td>
+                            <td><?= htmlspecialchars($product['available']) ?></td>
+                            <td><?= htmlspecialchars($product['created_at']) ?></td>
+                            <td><?= htmlspecialchars($product['updated_at']) ?></td>
+                            <td>
+                                <button class="btn btn-sm btn-warning edit-btn" data-id="<?= $product['id'] ?>">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-btn" data-id="<?= $product['id'] ?>">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add Product Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title txt-color" id="addProductModalLabel">Add Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addProductForm" action="../../controller/product.php?action=add" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="productName">Product Name</label>
+                                <input type="text" class="form-control" id="productName" name="name" placeholder="Enter product name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productPrice">Price</label>
+                                <input type="number" class="form-control" id="productPrice" name="price" placeholder="Enter price" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productCategory">Category</label>
+                                <select class="form-control" id="productCategory" name="category_id" required>
+                                    <option value="">Select category</option>
+                                    <option value="1">Category 1</option>
+                                    <option value="2">Category 2</option>
+                                    <option value="3">Category 3</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productPicture">Product Picture</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="productPicture" name="image" required>
+                                    <label class="custom-file-label" for="productPicture">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" form="addProductForm">Reset</button>
+                                <button type="submit" class="btn btn-primary">Add Product</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <?php endforeach; ?>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <aside class="col-lg-3 mb-4">
-            <div class="bg-light p-3 rounded sticky-top">
-                <h5>Cart</h5>
-                <ul id="cart-items" class="list-unstyled">
-                    <?php foreach ($_SESSION['cart'] as $cartItem): ?>
-                        <li><?php echo htmlspecialchars($cartItem['name']); ?> - $<?php echo htmlspecialchars($cartItem['price']); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-                <button class="btn btn-success w-100">Checkout</button>
-            </div>
-        </aside>
-    </div>
-</div>
 <?php include "../../includes/footer.php";  ?>

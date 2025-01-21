@@ -78,6 +78,20 @@ a.login-link:hover{
 .dropdown-toggle::after{
     align-self:center;
 }
+
+.profile-toggle{
+    background-color:var(--secondary-color);
+}
+.offcanvas-nav.offcanvas .profile-toggle{
+    background-color:#fff;
+    color:var(--secondary-color);
+}
+
+.profile-toggle
+.profile-toggle:active{
+    border:none !important;
+    border-color:transparent !important;
+}
 .w-49{
     width: 49%;
 }
