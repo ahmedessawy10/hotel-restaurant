@@ -29,7 +29,7 @@
                         <?php  } elseif ($_SESSION['user']['role'] == "user") { ?>
                             <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
 
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="index.html ">my orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/myOrders.php">my orders</a></li>
                         <?php  } ?>
 
                     <?php } else {
@@ -115,7 +115,7 @@
 
                                 <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
 
-                                <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="index.html ">my orders</a></li>
+                                <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/myOrders.php">my orders</a></li>
 
                             <?php  } ?>
 
