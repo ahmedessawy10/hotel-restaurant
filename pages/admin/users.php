@@ -16,6 +16,15 @@ $scripts = [];
 require_once "../../includes/header.php";
 require_once "../../includes/navbar.php";
 
+// Fetch users from the database using PDO
+try {
+    $sql = "SELECT * FROM users ORDER BY id DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error fetching users: " . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,10 +58,28 @@ require_once "../../includes/navbar.php";
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="userTableBody"></tbody>
+                <tbody id="userTableBody">
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($user['name']); ?></td>
+                            <td><?php echo htmlspecialchars($user['room']); ?></td>
+                            <td><img src="<?php echo htmlspecialchars($user['image']); ?>" alt="<?php echo htmlspecialchars($user['name']); ?>" width="50"></td>
+                            <td><?php echo htmlspecialchars($user['ext']); ?></td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="openEditModal(<?php echo $user['id']; ?>)">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteUser(<?php echo $user['id']; ?>)">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
         </div>
 
+        <!-- Add User Modal -->
         <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -61,33 +88,34 @@ require_once "../../includes/navbar.php";
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="addUserForm">
+                        <form id="addUserForm" action="../../controller/user.php?action=add" method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="userName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Enter name" required>
+                                <input type="text" class="form-control" id="userName" name="name" placeholder="Enter name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="userRoom" class="form-label">Room</label>
-                                <input type="text" class="form-control" id="userRoom" placeholder="Enter room" required>
+                                <input type="text" class="form-control" id="userRoom" name="room" placeholder="Enter room" required>
                             </div>
                             <div class="mb-3">
                                 <label for="userImage" class="form-label">Image</label>
-                                <input type="file" class="form-control" id="userImage" accept="image/*" required>
+                                <input type="file" class="form-control" id="userImage" name="image" accept="image/*" required>
                             </div>
                             <div class="mb-3">
                                 <label for="userExt" class="form-label">Ext.</label>
-                                <input type="text" class="form-control" id="userExt" placeholder="Enter extension" required>
+                                <input type="text" class="form-control" id="userExt" name="ext" placeholder="Enter extension" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save User</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" id="saveUserBtn">Save User</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Edit User Modal -->
         <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -96,40 +124,34 @@ require_once "../../includes/navbar.php";
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editUserForm">
+                        <form id="editUserForm" action="../../controller/user.php?action=edit" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="editUserId" name="id">
                             <div class="mb-3">
                                 <label for="editUserName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="editUserName" required>
+                                <input type="text" class="form-control" id="editUserName" name="name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="editUserRoom" class="form-label">Room</label>
-                                <input type="text" class="form-control" id="editUserRoom" required>
+                                <input type="text" class="form-control" id="editUserRoom" name="room" required>
                             </div>
                             <div class="mb-3">
                                 <label for="editUserImage" class="form-label">Image</label>
-                                <input type="file" class="form-control" id="editUserImage" accept="image/*">
+                                <input type="file" class="form-control" id="editUserImage" name="image" accept="image/*">
                             </div>
                             <div class="mb-3">
                                 <label for="editUserExt" class="form-label">Ext.</label>
-                                <input type="text" class="form-control" id="editUserExt" required>
+                                <input type="text" class="form-control" id="editUserExt" name="ext" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Update User</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" id="updateUserBtn">Update User</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/user.js"></script>
-</body>
-
-</html> -->
 
 
     <?php include "../../includes/footer.php";  ?>
