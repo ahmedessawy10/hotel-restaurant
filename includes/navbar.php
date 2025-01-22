@@ -18,10 +18,12 @@
                         if ($_SESSION['user']['role'] == "admin") {
                     ?>
 
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/home.php">Home</a></li>
 
                             <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="index.html ">orders</a></li>
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/manual_order.php">manual orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">manual orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/orders.php">orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/checks.php">checks</a></li>
                             <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a></li>
                             <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/products.php">products</a></li>
 
@@ -103,9 +105,10 @@
                             if ($_SESSION['user']['role'] == "admin") {
                         ?>
 
-                                <li class="px-2 "><a class="underline-link" href="index.html ">Home</a></li>
-                                <li class="px-2 "><a class="underline-link" href="index.html ">my orders</a></li>
-                                <li class="px-2 "><a class="underline-link" href="index.html ">orders</a></li>
+                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/home.php ">Home</a></li>
+                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">manual orders</a></li>
+                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/orders.php">orders</a></li>
+                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/checks.php">checks</a></li>
                                 <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a></li>
                                 <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/products.php ">products</a></li>
 

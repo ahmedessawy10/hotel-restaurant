@@ -29,19 +29,15 @@ if ($to && !DateTime::createFromFormat('Y-m-d', $to)) {
 // Build the SQL query dynamically
 $query = "SELECT orders.*, users.name AS name, users.email AS email, users.image AS image
           FROM orders 
-          INNER JOIN users ON users.id = orders.order_by ";
+          INNER JOIN users ON users.id = orders.order_by";
 
 $params = [];
 
 // Add date filter only if both `from` and `to` are provided
 if ($from && $to) {
-    $query .= " WHERE orders.created_at BETWEEN :from AND :to AND orders.order_by = :user_id";
+    $query .= " WHERE orders.created_at BETWEEN :from AND :to";
     $params['from'] = $from;
     $params['to'] = $to;
-    $params['user_id'] = $_SESSION['user']['id'];
-} else {
-    $query .= " WHERE  orders.order_by = :user_id";
-    $params['user_id'] = $_SESSION['user']['id'];
 }
 
 $query .= " ORDER BY orders.created_at DESC";
@@ -49,7 +45,6 @@ $query .= " ORDER BY orders.created_at DESC";
 // Fetch orders from the database
 try {
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':user_id', $_SESSION['user']['id'], PDO::PARAM_INT);
     $stmt->execute($params);
     $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -82,6 +77,7 @@ try {
                     <thead class="table-light">
                         <tr>
                             <th scope="col">Order ID</th>
+                            <th scope="col">User</th>
                             <th scope="col">Room No.</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Status</th>
@@ -95,6 +91,15 @@ try {
                             foreach ($orders as $order) {
                                 echo "<tr>
                                     <th scope='row'>#" . htmlspecialchars($order['id']) . "</th>
+                                    <td>
+                                        <div class='d-flex align-items-center'>
+                                            <img src='../../" . htmlspecialchars($order['image']) . "' alt='User Image' class='rounded-circle me-3' style='width: 45px; height: 45px; object-fit: cover;'>
+                                            <div>
+                                                <p class='mb-0 fw-bold'>" . htmlspecialchars($order['name']) . "</p>
+                                                <p class='mb-0 text-muted'>" . htmlspecialchars($order['email']) . "</p>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>" . htmlspecialchars($order['room_id']) . "</td>
                                     <td>$" . htmlspecialchars($order['total']) . "</td>
                                     <td><span class='badge bg-" . ($order['status'] == 'completed' ? 'success' : 'warning') . "'>" . htmlspecialchars($order['status']) . "</span></td>
@@ -116,7 +121,7 @@ try {
                                 $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                 echo "<tr class='collapse' id='orderItems-" . $order['id'] . "'>
-                                    <td colspan='6'>
+                                    <td colspan='7'>
                                         <div class='row g-3'>";
                                 foreach ($order_items as $item) {
                                     echo "<div class='col-md-4'>

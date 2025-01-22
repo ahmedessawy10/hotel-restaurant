@@ -10,7 +10,7 @@ if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
 }
 require_once "../../database/db.php";
 $pageTitle = "Users";
-$styles = ["../../assets/css/users.css"];
+$styles = ["users.css"];
 $scripts = [];
 
 require_once "../../includes/header.php";

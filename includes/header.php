@@ -44,6 +44,11 @@
 
 
     <?php
+    if (isset($cdnCss) && is_array($cdnCss)) {
+        foreach ($cdnCss as $css) {
+            echo "<link rel='stylesheet' href='{$css}'>";
+        }
+    }
     foreach ($styles as $style) {
         echo "<link rel='stylesheet' href='{$baseURL}/assets/css/{$style}'>";
     }

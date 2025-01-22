@@ -61,6 +61,11 @@ if (!isset($baseURL)) {
 
 // Loop through and include each script from the $scripts array
 
+if (isset($cdnJs) && is_array($cdnJs)) {
+    foreach ($cdnJs as $js) {
+        echo " <script src='{$js}'></script>";
+    }
+}
 foreach ($scripts as $script) {
     echo "<script src='{$baseURL}/assets/js/$script'></script>";
 }
