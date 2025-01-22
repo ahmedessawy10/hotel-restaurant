@@ -15,23 +15,9 @@ $scripts = [];
 
 require_once "../../includes/header.php";
 require_once "../../includes/navbar.php";
-
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-
-<body>
-    <main>
+<main>
         <div class="container mt-5 w-75">
             <div class="main-row d-flex flex-row justify-content-between align-items-center mb-4">
                 <h2 class="user-title">All Users</h2>
@@ -43,16 +29,18 @@ require_once "../../includes/navbar.php";
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Room</th>
                         <th>Image</th>
-                        <th>Ext.</th>
+                        <th>Email</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="userTableBody"></tbody>
+                <tbody id="userTableBody">
+                    <!-- Users will be dynamically added here -->
+                </tbody>
             </table>
         </div>
 
+        <!-- Add User Modal -->
         <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -61,33 +49,30 @@ require_once "../../includes/navbar.php";
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="addUserForm">
+                        <form id="addUserForm" onsubmit="addUser(event)" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="userName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="userName" placeholder="Enter name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="userRoom" class="form-label">Room</label>
-                                <input type="text" class="form-control" id="userRoom" placeholder="Enter room" required>
+                                <input type="text" class="form-control" id="userName" name="name" placeholder="Enter name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="userImage" class="form-label">Image</label>
-                                <input type="file" class="form-control" id="userImage" accept="image/*" required>
+                                <input type="file" class="form-control" id="userImage" name="image" accept="image/*" required>
                             </div>
                             <div class="mb-3">
-                                <label for="userExt" class="form-label">Ext.</label>
-                                <input type="text" class="form-control" id="userExt" placeholder="Enter extension" required>
+                                <label for="userEmail" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="userEmail" name="email" placeholder="Enter email" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save User</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" id="saveUserBtn">Save User</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Edit User Modal -->
         <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -96,40 +81,31 @@ require_once "../../includes/navbar.php";
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editUserForm">
+                        <form id="editUserForm" onsubmit="updateUser(event)" enctype="multipart/form-data">
+                            <input type="hidden" id="editUserId" name="id">
                             <div class="mb-3">
                                 <label for="editUserName" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="editUserName" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editUserRoom" class="form-label">Room</label>
-                                <input type="text" class="form-control" id="editUserRoom" required>
+                                <input type="text" class="form-control" id="editUserName" name="name" placeholder="Enter name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="editUserImage" class="form-label">Image</label>
-                                <input type="file" class="form-control" id="editUserImage" accept="image/*">
+                                <input type="file" class="form-control" id="editUserImage" name="image" accept="image/*">
                             </div>
                             <div class="mb-3">
-                                <label for="editUserExt" class="form-label">Ext.</label>
-                                <input type="text" class="form-control" id="editUserExt" required>
+                                <label for="editUserEmail" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="editUserEmail" name="email" placeholder="Enter email" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Update User</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" id="updateUserBtn">Update User</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/user.js"></script>
-</body>
-
-</html> -->
 
 
     <?php include "../../includes/footer.php";  ?>

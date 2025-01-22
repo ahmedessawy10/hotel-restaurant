@@ -1,102 +1,143 @@
-let users = JSON.parse(sessionStorage.getItem("users")) || [];
+// Add User
+const addUser = (event) => {
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('addUserForm'));
 
-const userTableBody = document.getElementById("userTableBody");
-const addUserForm = document.getElementById("addUserForm");
-const saveUserBtn = document.getElementById("saveUserBtn");
-const editUserForm = document.getElementById("editUserForm");
-const updateUserBtn = document.getElementById("updateUserBtn");
-
-const saveToSessionStorage = () => {
-    sessionStorage.setItem("users", JSON.stringify(users));
-};
-
-saveUserBtn.addEventListener("click", () => {
-    const userName = document.getElementById("userName").value;
-    const userRoom = document.getElementById("userRoom").value;
-    const userImage = document.getElementById("userImage").files[0];
-    const userExt = document.getElementById("userExt").value;
-
-    if (userName && userRoom && userImage && userExt) {
-        const user = {
-            id: Date.now(),
-            name: userName,
-            room: userRoom,
-            image: URL.createObjectURL(userImage),
-            ext: userExt,
-        };
-        users.push(user);
-        saveToSessionStorage();
-        renderUsers();
-        addUserForm.reset();
-        bootstrap.Modal.getInstance(document.getElementById("addUserModal")).hide();
-    } else {
-        alert("Please fill all fields!");
-    }
-});
-
-const openEditModal = (id) => {
-    const user = users.find((user) => user.id === id);
-    if (user) {
-        document.getElementById("editUserName").value = user.name;
-        document.getElementById("editUserRoom").value = user.room;
-        document.getElementById("editUserExt").value = user.ext;
-        updateUserBtn.setAttribute("data-id", id);
-        new bootstrap.Modal(document.getElementById("editUserModal")).show();
-    }
-};
-
-updateUserBtn.addEventListener("click", () => {
-    const id = parseInt(updateUserBtn.getAttribute("data-id"));
-    const userName = document.getElementById("editUserName").value;
-    const userRoom = document.getElementById("editUserRoom").value;
-    const userImage = document.getElementById("editUserImage").files[0];
-    const userExt = document.getElementById("editUserExt").value;
-
-    if (userName && userRoom && userExt) {
-        const user = users.find((user) => user.id === id);
-        if (user) {
-            user.name = userName;
-            user.room = userRoom;
-            user.ext = userExt;
-            if (userImage) {
-                user.image = URL.createObjectURL(userImage);
-            }
-            saveToSessionStorage();
-            renderUsers();
-            bootstrap.Modal.getInstance(document.getElementById("editUserModal")).hide();
+    fetch('../../controller/user.php?action=add', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            window.location.reload(); // Reload the page to reflect changes
+        } else {
+            alert(data.message);
         }
-    } else {
-        alert("Please fill all fields!");
-    }
-});
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to add user. Please try again.');
+    });
+};
 
+// Open Edit Modal
+const openEditModal = (id) => {
+    fetch(`../../controller/user.php?action=fetch&id=${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(user => {
+            if (user) {
+                // Populate the edit modal form
+                document.getElementById('editUserId').value = user.id;
+                document.getElementById('editUserName').value = user.name;
+                document.getElementById('editUserEmail').value = user.email;
+
+                // Show the modal
+                new bootstrap.Modal(document.getElementById('editUserModal')).show();
+            } else {
+                alert('User not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch user details. Please try again.');
+        });
+};
+
+// Update User
+const updateUser = (event) => {
+    event.preventDefault();
+    const formData = new FormData(document.getElementById('editUserForm'));
+
+    fetch('../../controller/user.php?action=edit', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            // Refresh the UI table
+            fetchUsers();
+            // Close the modal
+            bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update user. Please try again.');
+    });
+};
+
+// Delete User
 const deleteUser = (id) => {
-    users = users.filter((user) => user.id !== id);
-    saveToSessionStorage();
-    renderUsers();
+    if (confirm('Are you sure you want to delete this user?')) {
+        fetch(`../../controller/user.php?action=delete&id=${id}`, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                window.location.reload(); // Reload the page to reflect changes
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to delete user. Please try again.');
+        });
+    }
 };
 
-const renderUsers = () => {
-    userTableBody.innerHTML = users
-        .map(
-            (user) => `
-        <tr>
-            <td>${user.name}</td>
-            <td>${user.room}</td>
-            <td><img src="${user.image}" alt="${user.name}" width="50"></td>
-            <td>${user.ext}</td>
-            <td>
-                <button class="btn btn-sm btn-warning" onclick="openEditModal(${user.id})">
-                    <i class="fas fa-edit"></i> Edit
-                </button>
-                <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
-            </td>
-        </tr>
-    `
-        )
-        .join("");
+// Fetch Users on Page Load
+const fetchUsers = () => {
+    fetch('../../controller/user.php?action=fetch')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const userTableBody = document.getElementById('userTableBody');
+                userTableBody.innerHTML = ''; // Clear existing rows
+
+                data.users.forEach(user => {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${user.name}</td>
+                        <td><img src="${user.image}" alt="${user.name}" width="50"></td>
+                        <td>${user.email}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" onclick="openEditModal(${user.id})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    `;
+                    userTableBody.appendChild(newRow);
+                });
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch users. Please try again.');
+        });
 };
 
-renderUsers();
+// Fetch users when the page loads
+fetchUsers();
+
+// Attach event listeners
+document.getElementById('addUserForm').addEventListener('submit', addUser);
+document.getElementById('editUserForm').addEventListener('submit', updateUser);
