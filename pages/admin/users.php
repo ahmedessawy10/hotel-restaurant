@@ -7,6 +7,9 @@ require_once "../../database/db.php";
 if (isset($_SESSION['user']) && count($_SESSION['user']) == 0) {
     header('location:../logout.php');
     exit;
+} elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] !== "admin") {
+    header('location:../user/home.php');
+    exit;
 }
 require_once "../../database/db.php";
 $pageTitle = "users";
