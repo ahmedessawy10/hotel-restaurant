@@ -18,14 +18,14 @@
                         if ($_SESSION['user']['role'] == "admin") {
                     ?>
 
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/home.php">Home</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'admin_Home') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/home.php">Home</a></li>
 
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="index.html ">orders</a></li>
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">manual orders</a></li>
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/orders.php">orders</a></li>
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/checks.php">checks</a></li>
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a></li>
-                            <li class="py-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/products.php">products</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'orders') ? ' active' : ''    ?>" href="index.html ">orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'home') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/user/home.php">manual orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'orders') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/orders.php">orders</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'checks') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/checks.php">checks</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'users') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a></li>
+                            <li class="py-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'products') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/products.php">products</a></li>
 
 
                         <?php  } elseif ($_SESSION['user']['role'] == "user") { ?>
@@ -105,20 +105,20 @@
                             if ($_SESSION['user']['role'] == "admin") {
                         ?>
 
-                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/home.php ">Home</a></li>
-                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">manual orders</a></li>
-                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/orders.php">orders</a></li>
-                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/checks.php">checks</a></li>
-                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a></li>
-                                <li class="px-2 "><a class="underline-link" href="<?php echo $baseURL; ?>/pages/admin/products.php ">products</a></li>
+                                <li class="px-2 "><a class="underline-link <?php echo ($pageTitle == 'adminHome') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/home.php ">Home</a></li>
+                                <li class="px-2 "><a class="underline-link <?php echo ($pageTitle == 'home') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/user/home.php">manual orders</a></li>
+                                <li class="px-2 "><a class="underline-link <?php echo ($pageTitle == 'orders') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/orders.php">orders</a></li>
+                                <li class="px-2 "><a class="underline-link <?php echo ($pageTitle == 'checks') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/checks.php">checks</a></li>
+                                <li class="px-2 "><a class="underline-link <?php echo ($pageTitle == 'users') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/users.php">users</a></li>
+                                <li class="px-2 "><a class="underline-link <?php echo ($pageTitle == 'products') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/admin/products.php ">products</a></li>
 
 
 
                             <?php  } elseif ($_SESSION['user']['role'] == "user") { ?>
 
-                                <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
+                                <li class="px-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'home') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/user/home.php">Home</a></li>
 
-                                <li class="px-2 fs-6 fw-bold"><a class="underline-link" href="<?php echo $baseURL; ?>/pages/user/myOrders.php">my orders</a></li>
+                                <li class="px-2 fs-6 fw-bold"><a class="underline-link <?php echo ($pageTitle == 'myorders') ? ' active' : ''    ?>" href="<?php echo $baseURL; ?>/pages/user/myOrders.php">my orders</a></li>
 
                             <?php  } ?>
 

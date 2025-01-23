@@ -7,7 +7,7 @@ if (!isset($_SESSION['user']) || count($_SESSION['user']) == 0) {
     exit;
 }
 
-$pageTitle = "orders";
+$pageTitle = "myorders";
 $styles = ["orders.css"];
 $scripts = [""];
 
@@ -70,7 +70,9 @@ try {
                     <input id="to" name="to" type="date" class="form-control" value="<?php echo $to; ?>" />
                 </div>
                 <div class="col-12 col-md-4 d-flex align-items-center">
-                    <button type="submit" class="btn btn-primary w-100 py-2">Filter</button>
+                    <button type="submit" class="btn w-100 py-2" style="color: #fff;
+    background-color: rgb(214, 195, 169);
+    border: none;">Filter</button>
                 </div>
             </div>
         </form>

@@ -6,28 +6,30 @@ $scripts = [];
 
 require_once "../includes/header.php";
 
-
 ?>
 
-<section class="d-flex w-100 h-100 justify-content-center align-items-center">
+<div class="login-box text-center">
+    <span class="coffee-icon">☕</span>
+    <h2>Login</h2>
     <form action="../controller/login.php" method="post">
-        <div class="input-group">
-            <input type="email" name="email" id="email" class="form-control-lg" placeholder="User Email" required>
+        <div class="mb-3">
+            <input type="email" name="email" class="form-control" placeholder="Email" required>
         </div>
-        <div class="input-group">
-            <input type="password" name="password" class="form-control-lg" id="password" placeholder="Password" required>
+        <div class="mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
         </div>
-        <div class="input-group">
-            <input type="checkbox" class="check"> Remember me ?
+        <div class="form-check text-start mb-3">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="remember">Remember me</label>
         </div>
-
-        <a href="" style=" text-decoration: none;">Forgot Password ?</a>
-        <button class="btn" type="submit">Login </button>
+        <button type="submit" class="btn btn-primary">Sign In</button>
     </form>
+    <p class="mt-3"><a href="#">Forgot Password?</a></p>
+</div>
 
-</section>
 
-<?php #include "../includes/footer.php";  
+
+<?php #include "../includes/footer.php";
 ?>
 
 

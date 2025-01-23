@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json'); // Set response type to JSON
 
 // Use correct relative path to include db.php
-$dbPath = __DIR__ . '/../database/db.php';
+$dbPath = '../database/db.php';
 
 // Debugging: Check if the file exists
 if (!file_exists($dbPath)) {
@@ -17,6 +17,36 @@ require_once $dbPath;
 if (!$conn) {
     echo json_encode(['status' => 'error', 'message' => 'Database connection failed.']);
     exit;
+}
+
+/**
+ * Upload an image and return the file URL.
+ */
+function uploadImage($file, $targetDir)
+{
+    if ($file['size'] > 0) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!in_array($file['type'], $allowedTypes)) {
+            throw new Exception('Only JPEG, PNG, and GIF images are allowed.');
+        }
+
+        // Create the target directory if it doesn't exist
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
+        // Generate a unique filename
+        $fileName = time() . '_' . basename($file['name']);
+        $targetFile = $targetDir . $fileName;
+
+        // Move the uploaded file to the target directory
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+            return "assets/images/upload/products/" . $fileName;
+        } else {
+            throw new Exception('Failed to upload image.');
+        }
+    }
+    return null;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -36,40 +66,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Validate image file (if provided)
-        if ($image['size'] > 0) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!in_array($image['type'], $allowedTypes)) {
-                echo json_encode(['status' => 'error', 'message' => 'Only JPEG, PNG, and GIF images are allowed.']);
-                exit;
-            }
-
-            // Upload image
-            $targetDir = __DIR__ . '/../../assets/images/upload/';
-            if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0777, true);
-            }
-            $targetFile = $targetDir . basename($image['name']);
-            move_uploaded_file($image['tmp_name'], $targetFile);
-        } else {
-            $targetFile = null;
-        }
-
         try {
-            $sql = "INSERT INTO products (name, price, category_id, image, available, created_at, updated_at) 
-                    VALUES (:name, :price, :category_id, :image, :available, NOW(), NOW())";
+            // Upload image if provided
+            $imageUrl = null;
+            if ($image['size'] > 0) {
+                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/hotel-restaurant/assets/images/upload/products/";
+                $imageUrl = uploadImage($image, $targetDir);
+            }
+
+            // Insert product into the database
+            $sql = "INSERT INTO products (name, price, category_id, image, available) 
+                    VALUES (:name, :price, :category_id, :image, :available)";
             $stmt = $conn->prepare($sql);
             $stmt->execute([
                 ':name' => $name,
                 ':price' => $price,
                 ':category_id' => $category_id,
-                ':image' => $targetFile,
+                ':image' => $imageUrl,
                 ':available' => $available
             ]);
 
             $productId = $conn->lastInsertId();
             echo json_encode(['status' => 'success', 'message' => 'Product added successfully.', 'productId' => $productId]);
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Error adding product: ' . $e->getMessage()]);
         }
     } elseif ($action === 'edit') {
@@ -81,39 +100,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $available = intval($_POST['available']);
         $image = $_FILES['image'];
 
+        // Validate inputs
         if (empty($name) || empty($price) || empty($category_id)) {
             echo json_encode(['status' => 'error', 'message' => 'Name, price, and category are required.']);
             exit;
         }
 
         try {
+            // Upload new image if provided
+            $imageUrl = null;
             if ($image['size'] > 0) {
-                // Validate image file
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (!in_array($image['type'], $allowedTypes)) {
-                    echo json_encode(['status' => 'error', 'message' => 'Only JPEG, PNG, and GIF images are allowed.']);
-                    exit;
-                }
+                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/hotel-restaurant/assets/images/upload/products/";
+                $imageUrl = uploadImage($image, $targetDir);
+            }
 
-                // Upload new image
-                $targetDir = __DIR__ . '/../../assets/images/upload/';
-                $targetFile = $targetDir . basename($image['name']);
-                move_uploaded_file($image['tmp_name'], $targetFile);
-
+            // Update product in the database
+            if ($imageUrl) {
                 $sql = "UPDATE products SET name = :name, price = :price, category_id = :category_id, 
-                        image = :image, available = :available, updated_at = NOW() WHERE id = :id";
+                        image = :image, available = :available WHERE id = :id";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([
                     ':name' => $name,
                     ':price' => $price,
                     ':category_id' => $category_id,
-                    ':image' => $targetFile,
+                    ':image' => $imageUrl,
                     ':available' => $available,
                     ':id' => $id
                 ]);
             } else {
                 $sql = "UPDATE products SET name = :name, price = :price, category_id = :category_id, 
-                        available = :available, updated_at = NOW() WHERE id = :id";
+                        available = :available WHERE id = :id";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([
                     ':name' => $name,
@@ -125,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             echo json_encode(['status' => 'success', 'message' => 'Product updated successfully.']);
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Error updating product: ' . $e->getMessage()]);
         }
     }
@@ -176,4 +192,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>

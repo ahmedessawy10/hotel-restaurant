@@ -112,7 +112,7 @@ const fetchUsers = () => {
                     const newRow = document.createElement('tr');
                     newRow.innerHTML = `
                         <td>${user.name}</td>
-                        <td><img src="${user.image}" alt="${user.name}" width="50"></td>
+                        <td><img src="../../${user.image}" alt="${user.name}" width="50"></td>
                         <td>${user.email}</td>
                         <td>
                             <button class="btn btn-sm btn-warning" onclick="openEditModal(${user.id})">

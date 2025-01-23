@@ -8,7 +8,7 @@ if (!isset($_SESSION['user']) || count($_SESSION['user']) == 0) {
     exit;
 }
 
-$pageTitle = "Home";
+$pageTitle = "home";
 $styles = ["home.css"];
 $scripts = ["users/home.js"];
 

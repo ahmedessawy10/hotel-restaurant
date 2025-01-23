@@ -1,9 +1,17 @@
-// Fetch products from the database when the page loads
-document.addEventListener('DOMContentLoaded', fetchProducts);
-
 // Function to fetch products from the database
 const fetchProducts = () => {
-    fetch('controller/product.php?action=fetch')
+    console.log('Fetching products...'); // Debugging
+
+    // Add a timeout to the fetch request
+    const timeout = 5000; // 5 seconds
+    const fetchPromise = fetch('../../controller/product.php?action=fetch');
+
+    // Race the fetch request against a timeout
+    const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timed out')), timeout)
+    );
+
+    Promise.race([fetchPromise, timeoutPromise])
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -18,7 +26,10 @@ const fetchProducts = () => {
                 console.error('Error fetching products:', data.message);
             }
         })
-        .catch(error => console.error('Error fetching products:', error));
+        .catch(error => {
+            console.error('Error fetching products:', error);
+            alert('Failed to fetch products. Please check your connection or try again later.');
+        });
 };
 
 // Function to render the table with products
@@ -39,11 +50,11 @@ const renderTable = (products) => {
                 <td>${product.id}</td>
                 <td>${product.name}</td>
                 <td>$${product.price}</td>
-                <td><img src="${product.image}" alt="${product.name}" width="50" onerror="this.src='assets/images/default.png';"></td>
+                <td><img src="../../${product.image}" alt="${product.name}" width="50" onerror="this.src='assets/images/default.png';"></td>
                 <td>${product.category_id}</td>
                 <td>${product.available ? 'Yes' : 'No'}</td>
-                <td>${product.created_at}</td>
-                <td>${product.updated_at}</td>
+                <td>${product.create_at}</td>
+                <td>${product.update_at}</td>
                 <td>
                     <button class="btn btn-sm btn-warning" onclick="openEditModal(${product.id})">
                         <i class="fas fa-edit"></i> Edit
@@ -59,13 +70,13 @@ const renderTable = (products) => {
 };
 
 // Handle Add Product button click
-document.querySelector('.add-product').addEventListener('click', () => {
+const handleAddProductClick = () => {
     // Reset the form and set the save button to "Add Product"
     document.getElementById('addProductForm').reset();
     document.getElementById('saveProduct').textContent = "Add Product";
     document.getElementById('saveProduct').removeAttribute('data-id');
     new bootstrap.Modal(document.getElementById('addProductModal')).show();
-});
+};
 
 // Handle Save Product button click
 const saveProduct = (event) => {
@@ -94,7 +105,7 @@ const saveProduct = (event) => {
 
     const action = productId ? `edit&id=${productId}` : 'add';
 
-    fetch(`controller/product.php?action=${action}`, {
+    fetch(`../../controller/product.php?action=${action}`, {
         method: 'POST',
         body: formData
     })
@@ -118,7 +129,7 @@ const saveProduct = (event) => {
 // Handle Delete Product button click
 const deleteProduct = (id) => {
     if (confirm("Are you sure you want to delete this product?")) {
-        fetch(`controller/product.php?action=delete&id=${id}`, {
+        fetch(`../../controller/product.php?action=delete&id=${id}`, {
             method: 'GET'
         })
         .then(response => response.json())
@@ -139,7 +150,7 @@ const deleteProduct = (id) => {
 
 // Handle Edit Product button click
 const openEditModal = (id) => {
-    fetch(`controller/product.php?action=fetch&id=${id}`)
+    fetch(`../../controller/product.php?action=fetch&id=${id}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -153,8 +164,8 @@ const openEditModal = (id) => {
                 document.getElementById('productPrice').value = product.price;
                 document.getElementById('productCategory').value = product.category_id;
                 document.getElementById('productAvailable').value = product.available ? '1' : '0';
-                document.getElementById('productCreatedAt').value = product.created_at;
-                document.getElementById('productUpdatedAt').value = product.updated_at;
+                document.getElementById('productCreatedAt').value = product.create_at;
+                document.getElementById('productUpdatedAt').value = product.update_at;
 
                 // Set the save button to "Update Product"
                 document.getElementById('saveProduct').textContent = "Update Product";
@@ -172,5 +183,14 @@ const openEditModal = (id) => {
         });
 };
 
-// Attach event listeners
-document.getElementById('addProductForm').addEventListener('submit', saveProduct);
+// Function to attach event listeners
+const attachEventListeners = () => {
+    document.querySelector('.add-product').addEventListener('click', handleAddProductClick);
+    document.getElementById('addProductForm').addEventListener('submit', saveProduct);
+};
+
+// Attach event listeners and fetch products when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    attachEventListeners();
+    fetchProducts();
+});
